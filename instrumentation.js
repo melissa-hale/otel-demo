@@ -5,6 +5,8 @@ const {
 const {
   OTLPTraceExporter,
 } = require('@opentelemetry/exporter-trace-otlp-proto');
+import { Resource } from '@opentelemetry/resources'
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
 const {
   OTLPMetricExporter,
 } = require('@opentelemetry/exporter-metrics-otlp-proto');
@@ -12,6 +14,9 @@ const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
 
 
 const sdk = new NodeSDK({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'express-app',
+  }),
   traceExporter: new OTLPTraceExporter({
     url: `https://${process.env.OTEL_EXPORTER_OTLP_ENDPOINT}/v1/traces`
   }),
