@@ -5,8 +5,8 @@ const {
 const {
   OTLPTraceExporter,
 } = require('@opentelemetry/exporter-trace-otlp-proto');
-import { Resource } from '@opentelemetry/resources'
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
+const { Resource } = require('@opentelemetry/resources')
+const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions')
 const {
   OTLPMetricExporter,
 } = require('@opentelemetry/exporter-metrics-otlp-proto');
