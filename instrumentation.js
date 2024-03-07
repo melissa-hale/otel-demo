@@ -1,19 +1,24 @@
-/*instrumentation.js*/
-// Require dependencies
-const { NodeSDK } = require('@opentelemetry/sdk-node');
-const { ConsoleSpanExporter } = require('@opentelemetry/sdk-trace-node');
+const opentelemetry = require('@opentelemetry/sdk-node');
 const {
   getNodeAutoInstrumentations,
 } = require('@opentelemetry/auto-instrumentations-node');
 const {
-  PeriodicExportingMetricReader,
-  ConsoleMetricExporter,
-} = require('@opentelemetry/sdk-metrics');
+  OTLPTraceExporter,
+} = require('@opentelemetry/exporter-trace-otlp-proto');
+const {
+  OTLPMetricExporter,
+} = require('@opentelemetry/exporter-metrics-otlp-proto');
+const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
+
 
 const sdk = new NodeSDK({
-  traceExporter: new ConsoleSpanExporter(),
+  traceExporter: new OTLPTraceExporter({
+    url: `https://${{process.env.OTEL_EXPORTER_OTLP_ENDPOINT}}/v1/traces`
+  }),
   metricReader: new PeriodicExportingMetricReader({
-    exporter: new ConsoleMetricExporter(),
+    exporter: new OTLPMetricExporter({
+        url: `https://${{process.env.OTEL_EXPORTER_OTLP_ENDPOINT}}/v1/metrics`
+      }),
   }),
   instrumentations: [getNodeAutoInstrumentations()],
 });
