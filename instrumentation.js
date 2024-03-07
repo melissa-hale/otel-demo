@@ -13,11 +13,11 @@ const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
 
 const sdk = new NodeSDK({
   traceExporter: new OTLPTraceExporter({
-    url: `https://${{process.env.OTEL_EXPORTER_OTLP_ENDPOINT}}/v1/traces`
+    url: `https://${process.env.OTEL_EXPORTER_OTLP_ENDPOINT}/v1/traces`
   }),
   metricReader: new PeriodicExportingMetricReader({
     exporter: new OTLPMetricExporter({
-        url: `https://${{process.env.OTEL_EXPORTER_OTLP_ENDPOINT}}/v1/metrics`
+        url: `https://${process.env.OTEL_EXPORTER_OTLP_ENDPOINT}/v1/metrics`
       }),
   }),
   instrumentations: [getNodeAutoInstrumentations()],
