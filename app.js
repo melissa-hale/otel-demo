@@ -1,4 +1,4 @@
-/*app.js*/
+// https://opentelemetry.io/docs/languages/js/getting-started/nodejs/
 const express = require('express');
 
 const PORT = parseInt(process.env.PORT || '8080');
